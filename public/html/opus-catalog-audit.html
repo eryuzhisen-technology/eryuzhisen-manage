@@ -1,0 +1,83 @@
+<div class="content-box">
+    <h2>作品目录列表</h2>
+    <div class="search-box">
+        <ul>
+            <li>
+                <input id="inputCatalogName" placeholder="目录名称">
+            </li>
+            <li>
+                <a>
+                    <button class="btn btn-navy" id="btnCatalogSearch">查询</button>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="list-box">
+        <table>
+            <thead>
+            <tr>
+                <th class="sorting-no"><input id="checkAll" type="checkbox"></th>
+                <th class="sorting-no" width="200px">标题</th>
+                <th class="sorting-no" width="500px">简介</th>
+                <th class="sorting-no">封面</th>
+                <th class="sorting-no">
+                    <select id="linkStatus" style="width: 90px;">
+                        <option value="">审核状态</option>
+                        <option value="1">审核中</option>
+                        <option value="2">审核通过</option>
+                        <option value="3">审核未通过</option>
+                    </select>
+                </th>
+                <th class="sorting-no">时间</th>
+                <th class="sorting-no">操作</th>
+            </tr>
+            </thead>
+            <tbody id="catalogList">
+            </tbody>
+        </table>
+        <div>
+            <div id="PaginationContentId"></div>
+            <div class="per-page" style="float: left;">每页显示条数</div>
+            <div style="float: left;margin: 20px 10px;">
+                <select name="PerPageId" id="PerPageId" style="height: 30px;">
+                    <option value="5">5</option>
+                    <!--<option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>-->
+                </select>
+            </div>
+            <div id="PaginationId" class="pagination" style="float:right;"></div>
+        </div>
+    </div>
+</div>
+
+<div class="catalog-detail-box" style="display: none;" data="0">
+    <div class="catalog-detail-cover"></div>
+    <div class="catalog-detail">
+        <div class="detail-banner">
+            <button id="btnCatalogAuditClose" class="btn btn-navy" style="margin-right: 10px">关闭</button>
+        </div>
+        <div class="detail-loading"><img src="/images/loading.gif" width="20px" height="20px"></div>
+        <div class="custom-box" style="display: none;">
+            <h2>目录标题:</h2>
+            <div id="catalogTitle"></div>
+            <h2>目录简介:</h2>
+            <div id="catalogDesc"></div>
+            <h2>目录封面:</h2>
+            <img id="catalogCoverUrl" src="" style="width: 80px;height: 120px;">
+            <h2>审核备注:</h2>
+            <textarea id="catalogRemark" style="width: 100%">
+
+            </textarea>
+        </div>
+        <div class="clear"></div>
+        <div class="detail-bottom">
+            <table width="70%" style="margin-left: 15%;">
+                <tr>
+                    <td align="center"><button id="btnAuditingPass" class="btn btn-navy">审核通过</button></td>
+                    <td align="center"><button id="btnAuditingNotPass" class="btn btn-navy">审核不通过</button></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
