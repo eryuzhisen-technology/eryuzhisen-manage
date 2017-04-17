@@ -1,13 +1,13 @@
 <div class="content-box">
-    <h2>作品目录列表</h2>
+    <h2>作品章节列表</h2>
     <div class="search-box">
         <ul>
             <li>
-                <input id="inputCatalogName" placeholder="目录名称">
+                <input id="inputChapterName" placeholder="章节名称">
             </li>
             <li>
                 <a>
-                    <button class="btn btn-navy" id="btnCatalogSearch">查询</button>
+                    <button class="btn btn-navy" id="btnChapterSearch">查询</button>
                 </a>
             </li>
         </ul>
@@ -19,7 +19,6 @@
                 <th class="sorting-no"><input id="checkAll" type="checkbox"></th>
                 <th class="sorting-no" width="200px">标题</th>
                 <th class="sorting-no" width="500px">简介</th>
-                <th class="sorting-no">封面</th>
                 <th class="sorting-no">
                     <select id="linkStatus" style="width: 90px;">
                         <option value="">审核状态</option>
@@ -32,7 +31,7 @@
                 <th class="sorting-no">操作</th>
             </tr>
             </thead>
-            <tbody id="catalogList">
+            <tbody id="chapterList">
             </tbody>
         </table>
         <div>
@@ -55,18 +54,20 @@
     <div class="detail-cover"></div>
     <div class="detail-content">
         <div class="detail-banner">
-            <button id="btnCatalogAuditClose" class="btn btn-navy" style="margin-right: 10px">关闭</button>
+            <button id="btnChapterAuditClose" class="btn btn-navy" style="margin-right: 10px">关闭</button>
         </div>
         <div class="detail-loading"><img src="/images/loading.gif" width="20px" height="20px"></div>
         <div class="custom-box" style="display: none;">
-            <h2>目录标题:</h2>
-            <div id="catalogTitle"></div>
-            <h2>目录简介:</h2>
-            <div id="catalogDesc"></div>
-            <h2>目录封面:</h2>
-            <img id="catalogCoverUrl" src="" style="width: 80px;height: 120px;">
+            <h2>序号:</h2>
+            <div id="chapterIndex"></div>
+            <h2>章节标题:</h2>
+            <div id="chapterTitle"></div>
+            <h2>章节简介:</h2>
+            <div id="chapterDesc"></div>
+            <h2>章节内容:</h2>
+            <div id="chapterContent"></div>
             <h2>审核备注:</h2>
-            <textarea id="catalogRemark" style="width: 100%">
+            <textarea id="chapterRemark" style="width: 100%">
 
             </textarea>
         </div>
@@ -74,8 +75,8 @@
         <div class="detail-bottom">
             <table width="70%" style="margin-left: 15%;">
                 <tr>
-                    <td align="center"><button id="btnCatalogAuditingPass" class="btn btn-navy">审核通过</button></td>
-                    <td align="center"><button id="btnCatalogAuditingNotPass" class="btn btn-navy">审核不通过</button></td>
+                    <td align="center"><button id="btnChapterAuditingPass" class="btn btn-navy">审核通过</button></td>
+                    <td align="center"><button id="btnChapterAuditingNotPass" class="btn btn-navy">审核不通过</button></td>
                 </tr>
             </table>
         </div>

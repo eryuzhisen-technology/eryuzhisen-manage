@@ -1,18 +1,18 @@
-.catalog-desc {
+.opus-desc {
     width: 500px;
     overflow: hidden;
     text-overflow:ellipsis;
     white-space: nowrap;
 }
 
-.catalog-tile{
+.opus-tile{
     width: 200px;
     overflow: hidden;
     text-overflow:ellipsis;
     white-space: nowrap;
 }
 
-.catalog-detail-box {
+.detail-box {
     position: absolute;
     z-index: 2;
     width: 100%;
@@ -22,7 +22,7 @@
     overflow: auto;
 }
 
-.catalog-detail-box .catalog-detail-cover {
+.detail-box .detail-cover {
     position: absolute;
     z-index: 3;
     width: 100%;
@@ -33,7 +33,7 @@
     left: 0;
 }
 
-.catalog-detail-box .catalog-detail {
+.detail-box .detail-content {
     position: absolute;
     z-index: 4;
     width: 680px;
