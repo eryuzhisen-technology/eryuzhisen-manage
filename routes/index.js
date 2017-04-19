@@ -102,5 +102,49 @@ router.post('/opus/auditChapter', function (req, res) {
         });
 })
 
+router.get('/report/getFeedbackList', function (req, res) {
+    var query = queryString.stringify(req.query);
+
+    console.info(query)
+    request(main_url+'report/getFeedbackList?'+query,
+        function (error, response, body) {
+            if (!error && response.statusCode == 200) {
+                body = JSON.parse(body);
+                res.send(body);
+            }
+        });
+})
+
+router.get('/report/getFeedbackDetail', function (req, res) {
+    var query = queryString.stringify(req.query);
+
+    console.info(query)
+    request(main_url+'report/getFeedbackDetail?'+query,
+        function (error, response, body) {
+            if (!error && response.statusCode == 200) {
+                body = JSON.parse(body);
+                res.send(body);
+            }
+        });
+})
+
+router.post('/report/replyFeedback', function (req, res) {
+    request(
+        {
+            url:main_url+'report/replyFeedback',
+            method: "POST",
+            json: true,
+            headers: {
+                "content-type": "application/json",
+            },
+            body: req.body
+        },
+        function (error, response, body) {
+            if (!error && response.statusCode == 200) {
+                res.send(body);
+            }
+        });
+})
+
 
 module.exports = router;
