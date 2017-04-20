@@ -53,7 +53,7 @@ $(function() {
 function getCatalogCount() {
     var searchdata = "page=1&pageSize=1&auditStatus="+ queryCatalog.auditStatus;
 
-    var url = 'opus/getCatalogList?' + searchdata;
+    var url = '/opus/getCatalogList?' + searchdata;
     $.ajax({
         type: "GET",
         url: url,
@@ -94,7 +94,7 @@ function getCatalogList() {
 
     var searchdata = "page=" + $pageInfo.page_index + "&pageSize=" + $pageInfo.page_size + "&auditStatus="+ queryCatalog.auditStatus;
 
-    var url = 'opus/getCatalogList?' + searchdata;
+    var url = '/opus/getCatalogList?' + searchdata;
 
     $.ajax({
         type: "GET",
@@ -164,7 +164,7 @@ function getCatalogList() {
 function get_catalog_detail(id,callback) {
     $.ajax({
         type: "GET",
-        url: 'opus/getCatalogDetail?catalogId='+id,
+        url: '/opus/getCatalogDetail?catalogId='+id,
         contentType:'application/json; charset=utf-8',
         //headers: {tid:$cookieToken,uname:$cookieUid},
         cache:false,
@@ -190,7 +190,7 @@ function update_catalog_audit(id,auditStatus,auditRemark) {
     }
     $.ajax({
         type: "POST",
-        url: 'opus/auditCatalog',
+        url: '/opus/auditCatalog',
         data:JSON.stringify(data),
         contentType:'application/json; charset=utf-8',
         //headers: {tid:$cookieToken,uname:$cookieUid},

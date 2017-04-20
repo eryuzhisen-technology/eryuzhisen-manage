@@ -49,7 +49,7 @@ $(function() {
 function getFeedbackCount() {
     var searchdata = "page=1&pageSize=1&status="+ queryFeedback.feedbackStatus;
 
-    var url = 'report/getFeedbackList?' + searchdata;
+    var url = '/report/getFeedbackList?' + searchdata;
     $.ajax({
         type: "GET",
         url: url,
@@ -90,7 +90,7 @@ function getFeedbackList() {
 
     var searchdata = "page=" + $pageInfo.page_index + "&pageSize=" + $pageInfo.page_size + "&status="+ queryFeedback.feedbackStatus;
 
-    var url = 'report/getFeedbackList?' + searchdata;
+    var url = '/report/getFeedbackList?' + searchdata;
 
     $.ajax({
         type: "GET",
@@ -166,7 +166,7 @@ function getFeedbackList() {
 function get_feedback_detail(id,callback) {
     $.ajax({
         type: "GET",
-        url: 'report/getFeedbackDetail?feedbackId='+id,
+        url: '/report/getFeedbackDetail?feedbackId='+id,
         contentType:'application/json; charset=utf-8',
         //headers: {tid:$cookieToken,uname:$cookieUid},
         cache:false,
@@ -232,7 +232,7 @@ function reply_feedback(id,status,remark) {
     }
     $.ajax({
         type: "POST",
-        url: 'report/replyFeedback',
+        url: '/report/replyFeedback',
         data:JSON.stringify(data),
         contentType:'application/json; charset=utf-8',
         //headers: {tid:$cookieToken,uname:$cookieUid},

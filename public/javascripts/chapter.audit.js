@@ -56,7 +56,7 @@ $(function() {
 function getChapterCount() {
     var searchdata = "page=1&pageSize=1&auditStatus="+ queryChapter.auditStatus;
 
-    var url = 'opus/getChapterList?' + searchdata;
+    var url = '/opus/getChapterList?' + searchdata;
     $.ajax({
         type: "GET",
         url: url,
@@ -97,7 +97,7 @@ function getChapterList() {
 
     var searchdata = "page=" + $pageInfo.page_index + "&pageSize=" + $pageInfo.page_size + "&auditStatus="+ queryChapter.auditStatus;
 
-    var url = 'opus/getChapterList?' + searchdata;
+    var url = '/opus/getChapterList?' + searchdata;
 
     $.ajax({
         type: "GET",
@@ -168,7 +168,7 @@ function getChapterList() {
 function get_chapter_detail(id,callback) {
     $.ajax({
         type: "GET",
-        url: 'opus/getChapterDetail?chapterId='+id,
+        url: '/opus/getChapterDetail?chapterId='+id,
         contentType:'application/json; charset=utf-8',
         //headers: {tid:$cookieToken,uname:$cookieUid},
         cache:false,
@@ -194,7 +194,7 @@ function update_chapter_audit(id,auditStatus,auditRemark) {
     }
     $.ajax({
         type: "POST",
-        url: 'opus/auditChapter',
+        url: '/opus/auditChapter',
         data:JSON.stringify(data),
         contentType:'application/json; charset=utf-8',
         //headers: {tid:$cookieToken,uname:$cookieUid},

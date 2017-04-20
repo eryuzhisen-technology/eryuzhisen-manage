@@ -17,7 +17,7 @@ router.get('/opus/getCatalogList', function (req, res) {
     var query = queryString.stringify(req.query);
 
     console.info(query)
-    request(main_url+'opus/getCatalogList?'+query,
+    request(main_url+'/opus/getCatalogList?'+query,
         function (error, response, body) {
             if (!error && response.statusCode == 200) {
                 body = JSON.parse(body);
