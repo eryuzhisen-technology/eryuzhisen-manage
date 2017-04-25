@@ -1,10 +1,66 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<div class="content-box">
+    <h2>用户举报列表</h2>
 
-</body>
-</html>
+    <div class="list-box">
+        <table>
+            <thead>
+            <tr>
+                <th class="sorting-no"><input id="checkAll" type="checkbox"></th>
+                <th class="sorting-no" width="100px">用户id</th>
+                <th class="sorting-no" width="400px">内容id</th>
+                <th class="sorting-no">内容类型</th>
+                <th class="sorting-no">
+                    <select id="reportStatus" style="width: 90px;">
+                        <option value="0">待处理</option>
+                        <option value="1">已处理</option>
+                    </select>
+                </th>
+                <th class="sorting-no" width="300px">举报原因</th>
+                <th class="sorting-no">时间</th>
+                <th class="sorting-no">操作</th>
+            </tr>
+            </thead>
+            <tbody id="listContent">
+            </tbody>
+        </table>
+        <div>
+            <div id="PaginationContentId"></div>
+            <div class="per-page" style="float: left;">每页显示条数</div>
+            <div style="float: left;margin: 20px 10px;">
+                <select name="PerPageId" id="PerPageId" style="height: 30px;">
+                    <option value="5">5</option>
+                    <!--<option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>-->
+                </select>
+            </div>
+            <div id="PaginationId" class="pagination" style="float:right;"></div>
+        </div>
+    </div>
+</div>
+
+<div class="detail-box" style="display: none;" data="0">
+    <div class="detail-cover"></div>
+    <div class="detail-content">
+        <div class="detail-banner">
+            <button id="btnClose" class="btn btn-navy" style="margin-right: 10px">关闭</button>
+        </div>
+        <div class="detail-loading"><img src="/images/loading.gif" width="20px" height="20px"></div>
+        <div class="custom-box" style="display: none;">
+            <h2>用户id:</h2>
+            <div id="reportUserId"></div>
+            <h2>内容id:</h2>
+            <div id="reportContentId"></div>
+            <h2>内容类型:</h2>
+            <div id="reportContentType"></div>
+            <h2>举报原因:</h2>
+            <div id="reportReason"></div>
+            <h2>附加原因:</h2>
+            <div id="addReason"></div>
+        </div>
+        <div class="clear"></div>
+        <div class="detail-bottom">
+            <button id="btnReportSubmit" class="btn btn-navy">处理</button>
+        </div>
+    </div>
+</div>

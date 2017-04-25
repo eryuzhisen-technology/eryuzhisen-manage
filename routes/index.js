@@ -146,5 +146,49 @@ router.post('/report/replyFeedback', function (req, res) {
         });
 })
 
+router.get('/report/getReportList', function (req, res) {
+    var query = queryString.stringify(req.query);
+
+    console.info(query)
+    request(main_url+'report/getReportList?'+query,
+        function (error, response, body) {
+            if (!error && response.statusCode == 200) {
+                body = JSON.parse(body);
+                res.send(body);
+            }
+        });
+})
+
+router.get('/report/getReportDetail', function (req, res) {
+    var query = queryString.stringify(req.query);
+
+    console.info(query)
+    request(main_url+'report/getReportDetail?'+query,
+        function (error, response, body) {
+            if (!error && response.statusCode == 200) {
+                body = JSON.parse(body);
+                res.send(body);
+            }
+        });
+})
+
+router.post('/report/replyReport', function (req, res) {
+    request(
+        {
+            url:main_url+'report/replyReport',
+            method: "POST",
+            json: true,
+            headers: {
+                "content-type": "application/json",
+            },
+            body: req.body
+        },
+        function (error, response, body) {
+            if (!error && response.statusCode == 200) {
+                res.send(body);
+            }
+        });
+})
+
 
 module.exports = router;
