@@ -3,7 +3,7 @@ var queryString = require('querystring');
 var router = express.Router();
 var request = require('request');
 
-var main_url = "http://api.eryuzhisen.com/java/eryuzhisen-manager/";
+var main_url = "http://tools.eryuzhisen.com:18080/eryuzhisen-manager/";
 
 
 router.get('/', function (req, res) {
