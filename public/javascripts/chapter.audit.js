@@ -2,11 +2,15 @@
  * Created by huangmiao on 17-4-19.
  */
 
-var queryChapter = {'auditStatus':'0'}
+var queryChapter = {'catalog_id':'','auditStatus':'1'}
 
 $(function() {
-    $('#chapterAudit').on('click',function(){
+    $('#chapterAudit').on('click',function(event,catalogId){
+        queryChapter = {'catalog_id':'','auditStatus':'1'}
         $('#content').load('/html/chapter.audit.html',function() {
+            if(catalogId)
+                queryChapter.catalog_id = catalogId;
+
             $pageInfo.page_index = 1;
             $pageInfo.is_loading = false;
             getChapterCount();
@@ -55,6 +59,8 @@ $(function() {
 
 function getChapterCount() {
     var searchdata = "page=1&pageSize=1&auditStatus="+ queryChapter.auditStatus;
+    if(queryChapter.catalog_id)
+        searchdata += "&catalogId="+queryChapter.catalog_id;
 
     var url = '/opus/getChapterList?' + searchdata;
     $.ajax({
@@ -96,6 +102,8 @@ function getChapterList() {
     $('#listContent').html(htmlloading);
 
     var searchdata = "page=" + $pageInfo.page_index + "&pageSize=" + $pageInfo.page_size + "&auditStatus="+ queryChapter.auditStatus;
+    if(queryChapter.catalog_id)
+        searchdata += "&catalogId="+queryChapter.catalog_id;
 
     var url = '/opus/getChapterList?' + searchdata;
 
@@ -138,7 +146,7 @@ function getChapterList() {
                             '</td>'+
                             '<td><p class="small-width">第'+ v.chapter_index+'话</p></td>'+
                             '<td><p class="middle-width">'+ v.chapter_title+'</p></td>'+
-                            '<td><p class="larger-width">'+ v.chapter_desc+'</p></td>'+
+                            '<td><p class="larger-width">'+ v.catalog_title+'</p></td>'+
                             '<td>'+ auditTxt+'</td>'+
                             '<td>'+ v.publish_date+'</td>'+
                             '<td>'+

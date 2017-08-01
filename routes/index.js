@@ -190,5 +190,15 @@ router.post('/report/replyReport', function (req, res) {
         });
 })
 
+router.get('/upload/getPolicyAndAccess', function (req, res) {
+    request(main_url+'upload/getPolicyAndAccess',
+        function (error, response, body) {
+            if (!error && response.statusCode == 200) {
+                body = JSON.parse(body);
+                res.send(body);
+            }
+        });
+})
+
 
 module.exports = router;

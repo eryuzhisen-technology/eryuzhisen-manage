@@ -2,11 +2,95 @@
  * Created by huangmiao on 17-4-19.
  */
 
-var queryCatalog = {'auditStatus':'0'}
+var queryCatalog = {'auditStatus':'1','fuzzyCatalogTile':'','catalogType':'0'}
 
 $(function() {
     $('#catalogAudit').on('click',function(){
+        queryCatalog = {'auditStatus':'1','fuzzyCatalogTile':'','catalogType':'0'}
         $('#content').load('/html/catalog.audit.html',function() {
+
+            var uploader = new plupload.Uploader({
+                runtimes : 'html5,flash,silverlight,html4',
+                browse_button : 'catalogCoverSelect',
+                //multi_selection: false,
+                container: document.getElementById('uploadContainer'),
+                flash_swf_url : 'lib/upload/Moxie.swf',
+                silverlight_xap_url : 'lib/upload/Moxie.xap',
+                url : 'https://oss.aliyuncs.com',
+
+                filters: {
+                    mime_types: [ //只允许上传图片和zip,rar文件
+                        {
+                            title: "Image files",
+                            extensions: "jpg,png,jpeg"
+                        },
+                    ],
+                    max_file_size: '10mb', //最大只能上传10mb的文件
+                    prevent_duplicates: true //不允许选取重复文件
+                },
+
+                init: {
+                    PostInit: function() {
+
+                    },
+
+                    FilesAdded: function(up, files) {
+                        //可以判断当前expire是否超过了当前时间,如果超过了当前时间,就重新取一下.3s 做为缓冲
+                        now = timestamp = Date.parse(new Date()) / 1000;
+                        if (expire < now + 3)
+                        {
+                            getParams(function () {
+                                up.start();
+                            });
+                        }else {
+                            up.start();
+                        }
+                    },
+
+                    BeforeUpload: function(up, file) {
+                        send_request(up, file.name);
+                    },
+
+                    UploadProgress: function(up, file) {
+                    },
+
+                    FileUploaded: function(up, file, info) {
+                        if (info.status == 200)
+                        {
+                            console.info(JSON.stringify(uploadfileinfo));
+                            var fileUrl = uploadfileinfo[file.name].src;
+                            var name = uploadfileinfo[file.name].name;
+                            uploadfileinfo[file.name].load = 1;
+                            console.info(fileUrl);
+                            $('#catalogCoverUrl').attr('src',fileUrl);
+                        }
+                        else
+                        {
+                            console.info(info.response);
+                        }
+                    },
+
+                    Error: function(up, err) {
+                        if (err.code == -600) {
+                            show_popup("选择的文件太大了")
+                        }
+                        else if (err.code == -601) {
+                            show_popup("选择的文件后缀不对")
+                        }
+                        else if (err.code == -602) {
+                            show_popup("这个文件已经上传过一遍了");
+                        }
+                        else
+                        {
+                            show_popup("上传失败");
+                            console.info("\nError xml:" + err.response);
+                        }
+                    }
+                }
+            });
+
+            uploader.init();
+
             $pageInfo.page_index = 1;
             $pageInfo.is_loading = false;
             getCatalogCount();
@@ -18,6 +102,18 @@ $(function() {
                 });
             });
 
+            $('#catalogCoverUrl').hover(function(){
+                $("#catalogCoverSelect").show();
+            });
+
+            /*$('#catalogCoverSelect').on('click',function(){
+                $('#catalogCoverUpload').click();
+            })*/
+
+            $('#catalogCoverSelect').hover(function(){},function(){
+                $("#catalogCoverSelect").hide();
+            });
+
             $("#btnCatalogAuditingPass").on('click',function() {
                 var remark = $('#catalogRemark').val().trim();
                 update_catalog_audit($('.detail-box').attr('data'),1,remark)
@@ -26,6 +122,14 @@ $(function() {
             $("#btnCatalogAuditingNotPass").on('click',function() {
                 var remark = $('#catalogRemark').val().trim();
                 update_catalog_audit($('.detail-box').attr('data'),2,remark)
+            });
+
+            $('#btnCatalogSearch').on('click',function() {
+                queryCatalog.fuzzyCatalogTile = encodeURI(encodeURI($('#inputCatalogName').val().trim()));
+                $pageInfo.page_index = 1;
+                $pageInfo.is_loading = false;
+                getCatalogCount();
+                getCatalogList();
             });
 
             //全选
@@ -44,14 +148,20 @@ $(function() {
                 $pageInfo.is_loading = false;
                 getCatalogCount();
                 getCatalogList();
-
+            });
+            $("#catalogType").on('change',function() {
+                queryCatalog.catalogType = $(this).val();
+                $pageInfo.page_index = 1;
+                $pageInfo.is_loading = false;
+                getCatalogCount();
+                getCatalogList();
             });
         });
     });
 })
 
 function getCatalogCount() {
-    var searchdata = "page=1&pageSize=1&auditStatus="+ queryCatalog.auditStatus;
+    var searchdata = "page=1&pageSize=1&auditStatus="+ queryCatalog.auditStatus+"&fuzzyCatalogTile="+queryCatalog.fuzzyCatalogTile+"&catalogType="+queryCatalog.catalogType;
 
     var url = '/opus/getCatalogList?' + searchdata;
     $.ajax({
@@ -92,7 +202,7 @@ function getCatalogList() {
 
     $('#listContent').html(htmlloading);
 
-    var searchdata = "page=" + $pageInfo.page_index + "&pageSize=" + $pageInfo.page_size + "&auditStatus="+ queryCatalog.auditStatus;
+    var searchdata = "page=" + $pageInfo.page_index + "&pageSize=" + $pageInfo.page_size + "&auditStatus="+ queryCatalog.auditStatus+"&fuzzyCatalogTile="+queryCatalog.fuzzyCatalogTile+"&catalogType="+queryCatalog.catalogType;
 
     var url = '/opus/getCatalogList?' + searchdata;
 
@@ -127,6 +237,13 @@ function getCatalogList() {
                             auditTxt = '审核通过 ';
                         else if (v.audit_status == '2')
                             auditTxt = '审核未通过';
+
+                        var type = '普通';
+                        if(v.catalog_type == '1')
+                            type = '热门';
+                        else if (v.catalog_type == '2')
+                            type = '优秀';
+
                         var html =
                             '<tr class="list-detail">'+
                             '<td>'+
@@ -136,9 +253,11 @@ function getCatalogList() {
                             '<td><p class="larger-width">'+ v.catalog_desc+'</p></td>'+
                             '<td><img width="40px" height="60px" src="'+v.catalog_cover_url+'?x-oss-process=image/resize,w_40,limit_1"></td>'+
                             '<td>'+ auditTxt+'</td>'+
+                            '<td>'+ type+'</td>'+
                             '<td>'+ v.publish_time+'</td>'+
                             '<td>'+
                             '<a onclick="show_catalog_detail_box('+v.catalog_id+');">查看</a>'+
+                            '<a style="margin-left: 5px" onclick="jump_sub_menu('+v.catalog_id+');">章节</a>'+
                             '</td>'+
                             '</tr>';
                         $('#listContent').append(html);
@@ -159,6 +278,10 @@ function getCatalogList() {
             }
         }
     });
+}
+
+function jump_sub_menu(catalogId){
+    $('#chapterAudit').trigger("click",catalogId);
 }
 
 function get_catalog_detail(id,callback) {
