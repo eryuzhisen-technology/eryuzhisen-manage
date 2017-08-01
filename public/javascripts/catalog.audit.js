@@ -132,9 +132,9 @@ function getCatalogList() {
                             '<td>'+
                             '<input data="'+v.catalog_id+'" type="checkbox" name="check-item">'+
                             '</td>'+
-                            '<td><p class="middle-width">'+ v.catalog_title+'</p></td>'+
-                            '<td><p class="larger-width">'+ v.catalog_desc+'</p></td>'+
-                            '<td><img width="40px" height="60px" src="'+v.catalog_cover_url+'?x-oss-process=image/resize,w_40,limit_1"></td>'+
+                            '<td><p class="middle-width">'+ v.catalog_audit_title+'</p></td>'+
+                            '<td><p class="larger-width">'+ v.catalog_audit_desc+'</p></td>'+
+                            '<td><img width="40px" height="60px" src="'+v.catalog_audit_cover_url+'?x-oss-process=image/resize,w_40,limit_1"></td>'+
                             '<td>'+ auditTxt+'</td>'+
                             '<td>'+ v.publish_time+'</td>'+
                             '<td>'+
@@ -210,9 +210,9 @@ function update_catalog_audit(id,auditStatus,auditRemark) {
 }
 
 function fill_catalog_data(data) {
-    $("#catalogTitle").html(data.catalog_title);
-    $("#catalogDesc").html(data.catalog_desc);
-    $("#catalogCoverUrl").attr('src',data.catalog_cover_url);
+    $("#catalogTitle").html(data.catalog_audit_title);
+    $("#catalogDesc").html(data.catalog_audit_desc);
+    $("#catalogCoverUrl").attr('src',data.catalog_audit_cover_url);
     $('#catalogRemark').val(data.audit_remark);
     $('.detail-loading').hide();
     $(".custom-box").show();
