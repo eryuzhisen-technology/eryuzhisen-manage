@@ -200,5 +200,23 @@ router.get('/upload/getPolicyAndAccess', function (req, res) {
         });
 })
 
+router.post('/opus/updateCatalog', function (req, res) {
+    request(
+        {
+            url:main_url+'opus/updateCatalog',
+            method: "POST",
+            json: true,
+            headers: {
+                "content-type": "application/json",
+            },
+            body: req.body
+        },
+        function (error, response, body) {
+            if (!error && response.statusCode == 200) {
+                res.send(body);
+            }
+        });
+})
+
 
 module.exports = router;

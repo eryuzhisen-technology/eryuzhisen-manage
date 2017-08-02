@@ -67,6 +67,22 @@
         <div class="custom-box" style="display: none;">
             <h2>目录标题:</h2>
             <div id="catalogTitle"></div>
+            <table width="100%" cellspacing="0">
+                <tr>
+                    <td>
+                        <h2>目录排序:</h2>
+                        <input type="number" id="catalogSort" value="0" class="input-small">
+                    </td>
+                    <td>
+                        <h2>目录类型:</h2>
+                        <select id="dCatalogType" style="width: 90px;">
+                            <option value="0">普通</option>
+                            <option value="1">热门</option>
+                            <option value="2">优秀</option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
             <h2>目录简介:</h2>
             <div id="catalogDesc"></div>
             <h2>目录封面:</h2>
@@ -84,9 +100,13 @@
         <div class="detail-bottom">
             <table width="70%" style="margin-left: 15%;">
                 <tr>
+                    <td align="center"><button id="btnCatalogUpdate" class="btn btn-navy">提交</button></td>
+                    <td align="center"><button id="btnCatalogCancel" class="btn btn-navy">取消</button></td>
+                </tr>
+                <!--<tr>
                     <td align="center"><button id="btnCatalogAuditingPass" class="btn btn-navy">审核通过</button></td>
                     <td align="center"><button id="btnCatalogAuditingNotPass" class="btn btn-navy">审核不通过</button></td>
-                </tr>
+                </tr>-->
             </table>
         </div>
     </div>

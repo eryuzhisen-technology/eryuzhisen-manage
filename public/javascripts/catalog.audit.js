@@ -124,6 +124,23 @@ $(function() {
                 update_catalog_audit($('.detail-box').attr('data'),2,remark)
             });
 
+            $('#btnCatalogUpdate').on('click',function () {
+                var data = {
+                    'opus_id':$('.detail-box').attr('data'),
+                    'opus_type':$('#dCatalogType').val(),
+                    'cover_url':$('#catalogCoverUrl').attr('src'),
+                    'opus_sort':$('#catalogSort').val()
+                }
+                update_catalog_info(data);
+            });
+
+            $('#btnCatalogCancel').on('click',function () {
+                $('.detail-box').fadeOut(function(){
+                    $('.detail-loading').show();
+                    $(".custom-box").hide();
+                });
+            });
+
             $('#btnCatalogSearch').on('click',function() {
                 queryCatalog.fuzzyCatalogTile = encodeURI(encodeURI($('#inputCatalogName').val().trim()));
                 $pageInfo.page_index = 1;
@@ -305,6 +322,28 @@ function get_catalog_detail(id,callback) {
     });
 }
 
+function update_catalog_info(data) {
+    $.ajax({
+        type: "POST",
+        url: '/opus/updateCatalog',
+        data:JSON.stringify(data),
+        contentType:'application/json; charset=utf-8',
+        //headers: {tid:$cookieToken,uname:$cookieUid},
+        cache:false,
+        timeout: 10000,
+        error: function(XMLHttpRequest, textStatus, errorThrown){
+
+        },
+        success: function(json){
+            if(json.ret == "0"){
+                show_popup('提交成功');
+            } else {
+                show_popup('提交失败');
+            }
+        }
+    });
+}
+
 function update_catalog_audit(id,auditStatus,auditRemark) {
     var data = {
         'opus_id':id,
@@ -337,6 +376,8 @@ function fill_catalog_data(data) {
     $("#catalogDesc").html(data.catalog_desc);
     $("#catalogCoverUrl").attr('src',data.catalog_cover_url);
     $('#catalogRemark').val(data.audit_remark);
+    $('#dCatalogType').val(data.catalog_type);
+    $('#catalogSort').val(Number(data.catalog_sort));
     $('.detail-loading').hide();
     $(".custom-box").show();
 }
