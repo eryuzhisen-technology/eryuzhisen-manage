@@ -4,7 +4,7 @@
 var queryReport = {'status':'0'}
 $(function() {
     $('#reportAudit').on('click',function(){
-        $('#content').load('/html/report.html',function() {
+        $('#content').load('/html/audit.report.html',function() {
             $pageInfo.page_index = 1;
             $pageInfo.is_loading = false;
             getReportCount();

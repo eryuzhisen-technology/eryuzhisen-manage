@@ -4,7 +4,7 @@
 var queryFeedback = {'feedbackStatus':'0'}
 $(function() {
     $('#feedbackAudit').on('click',function(){
-        $('#content').load('/html/feedback.html',function() {
+        $('#content').load('/html/audit.feedback.html',function() {
             $pageInfo.page_index = 1;
             $pageInfo.is_loading = false;
             getFeedbackCount();

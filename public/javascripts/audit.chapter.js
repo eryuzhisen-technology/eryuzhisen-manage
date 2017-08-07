@@ -7,7 +7,7 @@ var queryChapter = {'catalog_id':'','auditStatus':'1'}
 $(function() {
     $('#chapterAudit').on('click',function(event,catalogId){
         queryChapter = {'catalog_id':'','auditStatus':'1'}
-        $('#content').load('/html/chapter.audit.html',function() {
+        $('#content').load('/html/audit.chapter.html',function() {
             if(catalogId)
                 queryChapter.catalog_id = catalogId;
 

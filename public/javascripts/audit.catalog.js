@@ -7,7 +7,7 @@ var queryCatalog = {'auditStatus':'1','fuzzyCatalogTile':'','catalogType':'0'}
 $(function() {
     $('#catalogAudit').on('click',function(){
         queryCatalog = {'auditStatus':'1','fuzzyCatalogTile':'','catalogType':'0'}
-        $('#content').load('/html/catalog.audit.html',function() {
+        $('#content').load('/html/audit.catalog.html',function() {
 
             var uploader = new plupload.Uploader({
                 runtimes : 'html5,flash,silverlight,html4',

@@ -218,5 +218,61 @@ router.post('/opus/updateCatalog', function (req, res) {
         });
 })
 
+router.get('/config/getBannerList', function (req, res) {
+    request(main_url+'config/getBannerList',
+        function (error, response, body) {
+            if (!error && response.statusCode == 200) {
+                body = JSON.parse(body);
+                res.send(body);
+            }
+        });
+})
+
+router.get('/config/getBannerDetail', function (req, res) {
+    request(main_url+'config/getBannerDetail',
+        function (error, response, body) {
+            if (!error && response.statusCode == 200) {
+                body = JSON.parse(body);
+                res.send(body);
+            }
+        });
+})
+
+router.post('/config/addBanner', function (req, res) {
+    request(
+        {
+            url:main_url+'config/addBanner',
+            method: "POST",
+            json: true,
+            headers: {
+                "content-type": "application/json",
+            },
+            body: req.body
+        },
+        function (error, response, body) {
+            if (!error && response.statusCode == 200) {
+                res.send(body);
+            }
+        });
+})
+
+router.post('/config/updateBanner', function (req, res) {
+    request(
+        {
+            url:main_url+'config/updateBanner',
+            method: "POST",
+            json: true,
+            headers: {
+                "content-type": "application/json",
+            },
+            body: req.body
+        },
+        function (error, response, body) {
+            if (!error && response.statusCode == 200) {
+                res.send(body);
+            }
+        });
+})
+
 
 module.exports = router;
