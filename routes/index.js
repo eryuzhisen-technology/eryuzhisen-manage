@@ -219,7 +219,8 @@ router.post('/opus/updateCatalog', function (req, res) {
 })
 
 router.get('/config/getBannerList', function (req, res) {
-    request(main_url+'config/getBannerList',
+    var query = queryString.stringify(req.query);
+    request(main_url+'config/getBannerList?'+query,
         function (error, response, body) {
             if (!error && response.statusCode == 200) {
                 body = JSON.parse(body);
@@ -229,7 +230,8 @@ router.get('/config/getBannerList', function (req, res) {
 })
 
 router.get('/config/getBannerDetail', function (req, res) {
-    request(main_url+'config/getBannerDetail',
+    var query = queryString.stringify(req.query);
+    request(main_url+'config/getBannerDetail?'+query,
         function (error, response, body) {
             if (!error && response.statusCode == 200) {
                 body = JSON.parse(body);

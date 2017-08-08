@@ -260,7 +260,7 @@ function getBannerList() {
                             '</td>'+
                             '<td><p class="middle-width">'+ v.title+'</p></td>'+
                             '<td><p class="larger-width">'+ v.desc+'</p></td>'+
-                            '<td><img width="40px" height="60px" src="'+v.image_url+'?x-oss-process=image/resize,w_40,limit_1"></td>'+
+                            '<td><img width="80px" height="32px" src="'+v.image_url+'?x-oss-process=image/resize,w_80,limit_1"></td>'+
                             '<td>'+ clientTypeTxt+'</td>'+
                             '<td>'+ availableTxt+'</td>'+
                             '<td>'+ v.update_time+'</td>'+
