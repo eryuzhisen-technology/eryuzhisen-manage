@@ -83,7 +83,7 @@
                         <select id="dBannerClientType" style="width: 90px;">
                             <option value="1">IOS</option>
                             <option value="2">Android</option>
-                            <option value="3">Web-pc</option>
+                            <option value="3" selected="selected">Web-pc</option>
                             <option value="4">Web-mobile</option>
                         </select>
                     </td>
@@ -91,17 +91,37 @@
                         <h2>是否可见:</h2>
                         <select id="dBannerAvailable" style="width: 90px;">
                             <option value="0">可用</option>
-                            <option value="1">不可用</option>
+                            <option value="1" selected="selected">不可用</option>
                         </select>
                     </td>
                 </tr>
             </table>
             <h2>banner图片:</h2>
-            <div class="detail-img">
+            <div class="detail-img" style="width: 160px;height: 64px;">
                 <img id="bannerCoverUrl" src="" style="width: 100%;height: 100%;">
-                <div id="bannerCoverSelect" class="cover-select" style="display: none">上传图片</div>
+                <div id="bannerCoverSelect" class="cover-select" style="line-height: 64px;display: none">上传图片</div>
                 <div id="uploadContainer"></div>
             </div>
+            <fieldset>
+                <legend>跳转配置</legend>
+                <label>pageId:</label><input id="pageId" type="text" class="input-small"/>
+                <div style="width: 100%;height: auto">
+                    <button class="btn btn-navy" id="btnAddJumpArgs" style="margin-left: 20px">添加参数</button>
+                    <table id="jumpArgs" width="100%" cellspacing="0">
+                        <!--<tr>
+                            <td>
+                                <label>key:</label><input type="text" class="input-small"/>
+                            </td>
+                            <td>
+                                <label>value:</label><input type="text" class="input-small"/>
+                            </td>
+                            <td>
+                                <button class="btn btn-navy">删除</button>
+                            </td>
+                        </tr>-->
+                    </table>
+                </div>
+            </fieldset>
             <h2>banner描述:</h2>
             <textarea id="bannerDesc" style="width: 100%;height: 160px">
 

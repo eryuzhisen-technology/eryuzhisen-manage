@@ -62,7 +62,7 @@ $(function() {
                             var name = uploadfileinfo[file.name].name;
                             uploadfileinfo[file.name].load = 1;
                             console.info(fileUrl);
-                            $('#bannerCoverUrl').attr('src',fileUrl);
+                            $('#bannerCoverUrl').attr('src',fileUrl+"?x-oss-process=image/resize,w_160,limit_1");
                         }
                         else
                         {
@@ -111,16 +111,33 @@ $(function() {
 
             $('#btnBannerUpdate').on('click',function () {
                 var bannerId = $('.detail-box').attr('data');
+                var jumpui = {};
+                var jumpArg = {};
+                jumpui['page_id'] = $('#pageId').val().trim();
+                $('#jumpArgs').find('tr').each(function(index,element){
+                    jumpArg[$(element).find('.arg-key').val()] = $(element).find('.arg-value').val();
+                });
+
+                if(!$.isEmptyObject(jumpArg)) {
+                    jumpui['arguments'] = jumpArg;
+                }
+                var imageUrl = $('#bannerCoverUrl').attr('src');
+                if(imageUrl && imageUrl.indexOf('?') != -1) {
+                    imageUrl = imageUrl.substring(0,imageUrl.indexOf('?'));
+                }
                 var data = {
                     'id':$('.detail-box').attr('data'),
                     'desc':$('#bannerDesc').val().trim(),
                     'title':$('#bannerTitle').val().trim(),
-                    'image':$('#bannerCoverUrl').attr('src'),
-                    'jump':$('#bannerJump').val().trim(),
+                    'image':imageUrl,
+                    'jump':JSON.stringify(jumpui),
                     'client_type':$('#dBannerClientType').val(),
                     // 'client_version':$('#bannerClientVersion').val(),
                     'available':$('#dBannerAvailable').val()
                 }
+
+                console.info(JSON.stringify(data));
+
                 if(bannerId && Number(bannerId) > 0)
                     update_banner(data);
                 else
@@ -159,11 +176,33 @@ $(function() {
             });
 
             $('#addBanner').on('click',function(){
-                $('.detail-box').fadeIn();
+                $('.detail-box').fadeIn(function(){
+                    $('.detail-loading').hide();
+                    $(".custom-box").show();
+                });
+            });
+
+            $('#btnAddJumpArgs').on('click',function(){
+                var html = '<tr>'+
+                '<td>'+
+                    '<label>key:</label><input type="text" class="arg-key input-small"/>'+
+                '</td>'+
+                '<td>'+
+                    '<label>value:</label><input type="text" class="arg-value input-small"/>'+
+                '</td>'+
+                '<td>'+
+                    '<button class="btn btn-navy" onclick="delDom(this);">删除</button>'+
+                '</td>'+
+                '</tr>';
+                $('#jumpArgs').append(html);
             });
         });
     });
 })
+
+function delDom(dom) {
+    $(dom).parents('tr').remove();
+}
 
 function getBannerCount() {
     var searchdata = "page=1&pageSize=1&available="+ queryBanner.available+"&clientType="+queryBanner.client_type;
@@ -355,22 +394,41 @@ function update_banner(data) {
 
 function fill_banner_data(data) {
     $("#bannerTitle").val(data.title);
-    $("#bannerdesc").val(data.desc);
-    $("#bannerCoverUrl").attr('src',data.image_url);
+    $("#bannerDesc").val(data.desc);
+    $("#bannerCoverUrl").attr('src',data.image_url+"?x-oss-process=image/resize,w_160,limit_1");
     $('#dBannerClientType').val(data.client_type);
     $('#dBannerAvailable').val(data.available);
+    console.info(JSON.stringify(data.jumpui));
+    if(data.jumpui) {
+        $('#pageId').val(data.jumpui.page_id);
+        if(data.jumpui.arguments) {
+            for(var key in data.jumpui.arguments) {
+                var html = '<tr>'+
+                    '<td>'+
+                    '<label>key:</label><input type="text" class="arg-key input-small" value="'+key+'"/>'+
+                    '</td>'+
+                    '<td>'+
+                    '<label>value:</label><input type="text" class="arg-value input-small" value="'+data.jumpui.arguments[key]+'"/>'+
+                    '</td>'+
+                    '<td>'+
+                    '<button class="btn btn-navy" onclick="delDom(this);">删除</button>'+
+                    '</td>'+
+                    '</tr>';
+                $('#jumpArgs').append(html);
+            }
+        }
+    }
     $('.detail-loading').hide();
     $(".custom-box").show();
 }
 
 function rest_banner_data() {
+    $('.detail-box').attr('data','');
     $("#bannerTitle").val('');
-    $("#bannerdesc").val('');
+    $("#bannerDesc").val('');
     $("#bannerCoverUrl").attr('src','');
     $('#dBannerClientType').val('3');
-    $('#dBannerAvailable').val('0');
-    $('.detail-loading').hide();
-    $(".custom-box").show();
+    $('#dBannerAvailable').val('1');
 }
 
 function show_banner_detail_box(id) {

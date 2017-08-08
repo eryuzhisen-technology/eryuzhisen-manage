@@ -62,7 +62,7 @@ $(function() {
                             var name = uploadfileinfo[file.name].name;
                             uploadfileinfo[file.name].load = 1;
                             console.info(fileUrl);
-                            $('#catalogCoverUrl').attr('src',fileUrl);
+                            $('#catalogCoverUrl').attr('src',fileUrl+"?x-oss-process=image/resize,w_80,limit_1");
                         }
                         else
                         {
@@ -125,10 +125,14 @@ $(function() {
             });
 
             $('#btnCatalogUpdate').on('click',function () {
+                var coverUrl = $('#catalogCoverUrl').attr('src');
+                if(coverUrl && coverUrl.indexOf('?') != -1) {
+                    coverUrl = coverUrl.substring(0,coverUrl.indexOf('?'));
+                }
                 var data = {
                     'opus_id':$('.detail-box').attr('data'),
                     'opus_type':$('#dCatalogType').val(),
-                    'cover_url':$('#catalogCoverUrl').attr('src'),
+                    'cover_url':coverUrl,
                     'opus_sort':$('#catalogSort').val()
                 }
                 update_catalog_info(data);
@@ -374,7 +378,7 @@ function update_catalog_audit(id,auditStatus,auditRemark) {
 function fill_catalog_data(data) {
     $("#catalogTitle").html(data.catalog_title);
     $("#catalogDesc").html(data.catalog_desc);
-    $("#catalogCoverUrl").attr('src',data.catalog_cover_url);
+    $("#catalogCoverUrl").attr('src',data.catalog_cover_url+"?x-oss-process=image/resize,w_80,limit_1");
     $('#catalogRemark').val(data.audit_remark);
     $('#dCatalogType').val(data.catalog_type);
     $('#catalogSort').val(Number(data.catalog_sort));

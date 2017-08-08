@@ -326,8 +326,6 @@ input,button,select,textarea{outline:none;}
 }
 
 .detail-img {
-  width: 80px;
-  height: 120px;
   position: relative;
   overflow: hidden;
 }
@@ -342,7 +340,6 @@ input,button,select,textarea{outline:none;}
   background-color: rgba(0,0,0,.8);
   cursor: pointer;
   text-align: center;
-  line-height: 120px;
   font-size: 15px;
   color: #dcdcdc;
 }
